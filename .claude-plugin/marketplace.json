@@ -1,0 +1,28 @@
+{
+  "name": "nextjs-sanity-blog",
+  "owner": {
+    "name": "Vladimir Terekhov",
+    "email": "vv@attractgroup.com",
+    "url": "https://github.com/BuildShipGrowRepeat"
+  },
+  "plugins": [
+    {
+      "name": "building-blog",
+      "source": ".",
+      "description": "Opinionated, batteries-included spec for adding an SEO-first, i18n-ready blog to a Next.js + Sanity site. 40-question intake, one-page plan, 20-section spec, pass/fail checklist. Includes AI hero images via Gemini 3 Pro Image (Nano Banana Pro).",
+      "version": "0.1.0",
+      "homepage": "https://github.com/BuildShipGrowRepeat/nextjs-sanity-blog-skill",
+      "license": "MIT",
+      "category": "development",
+      "keywords": [
+        "nextjs",
+        "sanity",
+        "blog",
+        "seo",
+        "i18n",
+        "hreflang",
+        "ai-images"
+      ]
+    }
+  ]
+}

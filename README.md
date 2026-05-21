@@ -19,7 +19,8 @@ Two ways.
 **As a Claude Code plugin** (recommended):
 
 ```
-/plugin install BuildShipGrowRepeat/nextjs-sanity-blog-skill
+/plugin marketplace add BuildShipGrowRepeat/nextjs-sanity-blog-skill
+/plugin install building-blog@nextjs-sanity-blog
 ```
 
 **Manual**:
