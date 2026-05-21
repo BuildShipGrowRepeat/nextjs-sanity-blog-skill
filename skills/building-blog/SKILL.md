@@ -7,7 +7,7 @@ description: Use when adding a blog to a Next.js + Sanity site, building a blog 
 
 ## Overview
 
-Universal workflow for adding a blog to a Next.js site backed by Sanity CMS. Targets a ~50–500-post corporate blog: SEO-first, i18n-ready, performance-budgeted, accessibility-compliant.
+Universal workflow for adding a blog to a Next.js site backed by Sanity CMS. Targets a corporate blog: SEO-first, i18n-ready, performance-budgeted, accessibility-compliant.
 
 **SKILL.md is the orchestrator. The spec lives in the two reference files.**
 
@@ -57,7 +57,7 @@ Follow §2–§20 in order. §19 (Pass/Fail Checklist) is the definition of done
 ## When NOT to use this skill
 
 - Static / MDX-only blogs (no CMS) — different stack, different patterns
-- News sites or publishers with >1000 posts — sitemap chunking and editor tooling become primary concerns
+- High-velocity news publishers — sitemap chunking and editor tooling become primary concerns
 - Documentation sites — use a docs framework instead
 - Marketing landing pages that aren't really a blog
 

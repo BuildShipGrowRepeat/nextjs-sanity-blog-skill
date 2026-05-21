@@ -1,6 +1,6 @@
 # Building a Blog: Technical & SEO Requirements
 
-Universal technical specification for adding a blog to a Next.js + Sanity website. Opinionated, concise, decision-ready. Suitable for a corporate blog with ~50–500 posts, organic-search-first traffic, optional AI authoring with human review.
+Universal technical specification for adding a blog to a Next.js + Sanity website. Opinionated, concise, decision-ready. Suitable for a corporate blog with organic-search-first traffic and optional AI authoring with human review.
 
 **How to use this document.** Walk §0 with the user first. The answers populate §1 (Project Profile). §2–§20 are the universal spec — they read from §1 and never need editing per project. §21 is the pass/fail checklist. Appendices A and B record deferred decisions and deliberate non-features.
 
@@ -271,7 +271,7 @@ Seed at least one author at Studio setup. Posts reference authors by id so a nam
 - Category filtering on `/blog` happens via query param (`/blog?category=<slug>`) — client-side filter, no new SEO surface.
 - Categories are used for: filter pills on listing, breadcrumb label, card label, related-posts logic, internal organization.
 
-Rationale: at this scale (≤500 posts) tags create thin archives and governance overhead. AI authors invent arbitrary tags if given the option. Topic clusters happen via in-body links and the related-posts block. If tags become essential later, add the field, but plan for category-landing-page-style governance up front.
+Rationale: at corporate-blog scale, tags create thin archives and governance overhead. AI authors invent arbitrary tags if given the option. Topic clusters happen via in-body links and the related-posts block. If tags become essential later, add the field, but plan for category-landing-page-style governance up front.
 
 ---
 
@@ -489,7 +489,7 @@ Per §1.E2. Default: **automatic** — the newest post appears as a larger "hero
 ### 8.4 Pagination
 
 - Numbered pages: `/blog` (page 1), `/blog/page/2`, `/blog/page/3`, etc.
-- **Every paginated page is indexable and self-canonical.** Do not `noindex` pagination: Google wants paginated archives discoverable, and `noindex` drops them from Search. For a 50–500 post blog, crawl budget is irrelevant.
+- **Every paginated page is indexable and self-canonical.** Do not `noindex` pagination: Google wants paginated archives discoverable, and `noindex` drops them from Search. At corporate-blog scale, crawl budget is irrelevant.
 - `rel=prev/next` is deprecated — each paginated page stands on its own.
 - Avoid infinite scroll (Googlebot does not trigger scroll). "Load more" is acceptable only if it also updates the URL.
 

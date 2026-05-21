@@ -2,7 +2,7 @@
 
 An opinionated, batteries-included spec for adding a blog to a Next.js website backed by Sanity CMS. Built as a Claude Code skill: install it, say "add a blog", and the agent walks 40 intake questions, scans your project, drafts a one-page plan for your approval, and then implements against a ~1100-line technical spec that already covers SEO, i18n, performance, accessibility, AI hero image generation, and a pass/fail checklist.
 
-Aimed at corporate blogs at the 50 to 500 post scale. Organic-search-first. Optional AI authoring with human review inside Sanity Studio.
+Aimed at corporate blogs. Organic-search-first. Optional AI authoring with human review inside Sanity Studio.
 
 ## What you actually get
 
@@ -66,13 +66,13 @@ If your stack is meaningfully different (Contentful, Payload, MDX-only, Astro, R
 ## What this is not
 
 - Not a docs site generator. Use Nextra, Docusaurus, or Starlight.
-- Not for news publishers at high content velocity. Past ~1000 posts, sitemap chunking and editorial workflow become primary concerns and this spec gets thin.
+- Not for high-velocity news publishers, where sitemap chunking and editorial workflow become primary concerns and this spec gets thin.
 - Not a marketing landing page builder dressed up as a blog.
 - Not a UI library or design system. It assumes you already have one.
 
 ## Why this exists
 
-Every time you ask an AI to "add a blog to my Next.js site", you get a slightly different answer. Some answers ship without alt text on hero images. Some include tags by default even though tags will fragment a 100-post archive into thin pages Google ignores. Some forget hreflang on listing pages. Some over-engineer with `@sanity/document-internationalization` when the site has 50 posts that don't even share topics across locales.
+Every time you ask an AI to "add a blog to my Next.js site", you get a slightly different answer. Some answers ship without alt text on hero images. Some include tags by default even though tags will fragment a small archive into thin pages Google ignores. Some forget hreflang on listing pages. Some over-engineer with `@sanity/document-internationalization` when the site's articles don't even share topics across locales.
 
 This skill is what a careful, opinionated implementation looks like, written down once so you don't relitigate it on every project. The opinions have rationale inline. Where you disagree, override via the §0 intake. That is exactly what §0 is for.
 
@@ -99,7 +99,7 @@ MIT. See `LICENSE`.
 
 ## Author
 
-Vladimir Terekhov · [BuildShipGrowRepeat](https://github.com/BuildShipGrowRepeat) · vv@attractgroup.com
+Vladimir Terekhov · [BuildShipGrowRepeat](https://github.com/BuildShipGrowRepeat) · [attractgroup.com](https://attractgroup.com) · vv@attractgroup.com
 
 ---
 
