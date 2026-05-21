@@ -36,6 +36,28 @@ Read what's already there. Pre-filling answers from detected values is much bett
 
 Record findings as a brief "Detected" list before the questionnaire.
 
+### Step 1.5 — Fetch the latest docs for the stack you'll touch
+
+Spec opinions can drift from upstream reality. Before implementing, pull current docs for the libraries you will actually use on this project. Do not skip this — the spec was last audited at a fixed point in time, and Next.js / Sanity / next-intl ship breaking changes more often than this skill is updated.
+
+Use [`context7`](https://context7.com) if it is available in the environment (it is the fastest way to read current library docs); otherwise fall back to the library's official docs site via `WebFetch`. Cross-check against the spec when you reach the matching section.
+
+Minimum docs to read for any blog build:
+
+- **Next.js** — App Router, `generateStaticParams`, `generateMetadata`, dynamic `params` (sync vs Promise in 15/16), image config, `revalidateTag`, `unstable_cache` deprecation status
+- **Sanity v3** (`@sanity/client`, `next-sanity`) — `client.fetch` options, draft mode + `stega` rules, `defineQuery`, GROQ projection patterns, image URL builder
+- **next-intl** (only if multi-locale) — App Router setup, `getTranslations`, `getMessages`, `setRequestLocale`, hreflang patterns
+- **@portabletext/react** — current component override API, plugin packages
+- **@sanity/image-url** — params, hotspot/crop behaviour, `auto=format`
+
+Also check, just-in-time, when you hit the matching spec section:
+
+- **Hero image generator** — Gemini 3 Pro Image (Nano Banana Pro) — current model name, image generation endpoint, supported sizes/aspect ratios, JSON schema for `responseModalities`
+- **JSON-LD** — Google's [Article structured data](https://developers.google.com/search/docs/appearance/structured-data/article) page for current required fields
+- **CWV thresholds** — `web.dev` Core Web Vitals page for current LCP/INP/CLS "good" cutoffs
+
+If the docs contradict the spec, the docs win. Note the contradiction in the project profile (§1) and proceed against the docs.
+
 ### Step 2 — Run the intake questionnaire
 
 Open `blog-technical-requirements.md` and walk through §0.

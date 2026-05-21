@@ -4,6 +4,18 @@ Universal technical specification for adding a blog to a Next.js + Sanity websit
 
 **How to use this document.** Walk §0 with the user first. The answers populate §1 (Project Profile). §2–§20 are the universal spec — they read from §1 and never need editing per project. §21 is the pass/fail checklist. Appendices A and B record deferred decisions and deliberate non-features.
 
+**Treat library specifics as guidance, not gospel.** This spec was audited against a fixed point in time. Next.js, Sanity, next-intl, `@sanity/image-url`, `@portabletext/react`, and the Gemini image API all ship breaking changes faster than this file is updated. Before implementing each section that touches one of those libraries, pull the latest docs (via `context7` if available, otherwise `WebFetch` on the official docs site) and let upstream win on conflicts. Specifically re-verify:
+
+- §3, §6 — Sanity schema syntax, `defineType`/`defineField`/`defineQuery`, `next-sanity` client options, draft mode + `stega` rules
+- §7 — `generateMetadata`, dynamic `params` shape in current Next.js major (sync vs `Promise`), `alternates.languages` format
+- §7, §9 — Google's [Article structured data](https://developers.google.com/search/docs/appearance/structured-data/article) and [FAQPage](https://developers.google.com/search/docs/appearance/structured-data/faqpage) required fields
+- §9 — `@portabletext/react` component override API and plugin packages
+- §14 — `web.dev` CWV thresholds for current LCP/INP/CLS "good" cutoffs
+- §17 — current GA4 / Plausible / Fathom snippet and consent integration
+- §20 — Gemini image model name, endpoint, supported sizes/aspect ratios, response schema
+
+If something in §2–§20 contradicts the docs you just read, the docs win. Record the contradiction in §1 under "Approved overrides".
+
 ---
 
 ## §0. Intake Questionnaire
