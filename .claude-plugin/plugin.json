@@ -1,0 +1,34 @@
+{
+  "name": "building-blog",
+  "version": "0.1.0",
+  "description": "Opinionated, batteries-included spec for adding an SEO-first, i18n-ready blog to a Next.js + Sanity site. Walks 40 intake questions, scans the project, drafts a one-page plan for approval, then implements against a 20-section technical spec with pass/fail checklist. Includes a working generator for AI hero images via Gemini 3 Pro Image (Nano Banana Pro).",
+  "author": {
+    "name": "Vladimir Terekhov",
+    "email": "vv@attractgroup.com",
+    "url": "https://github.com/BuildShipGrowRepeat"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/BuildShipGrowRepeat/nextjs-sanity-blog-skill",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BuildShipGrowRepeat/nextjs-sanity-blog-skill.git"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-skill",
+    "nextjs",
+    "next-js",
+    "sanity",
+    "sanity-cms",
+    "blog",
+    "seo",
+    "i18n",
+    "next-intl",
+    "hreflang",
+    "blogposting",
+    "jsonld",
+    "ai-blog",
+    "nano-banana",
+    "gemini-3-pro-image"
+  ]
+}
