@@ -892,7 +892,7 @@ The style guide lives in `blog-image-style-guide.md`. Walk its intake questions 
 
 ### 20.3 Generator script
 
-Place this at `scripts/generate-hero-images.ts`. Before running: populate the `TOPICS` array with one entry per article (one slug per locale + crafted prompt + localized alt). Assumes the post document `_id` pattern `post.<locale>.<slug>` (adjust if §1 uses a different document ID scheme). Idempotent: re-runs skip posts already carrying `heroImage.asset` unless `--force` is passed. Saves a local copy under `public/images/blog/<primary-locale-slug>.<ext>` for git asset history as well as uploading to Sanity (skip the local copy if §1.J3 = sanity-only).
+Place this at `scripts/generate-hero-images.ts`. Before running: populate the `TOPICS` array with one entry per article (one slug per locale + crafted prompt + localized alt). Assumes the post document `_id` pattern `post.<locale>.<slug>` (adjust if §1 uses a different document ID scheme). Idempotent: re-runs skip posts already carrying `heroImage.asset` unless `--force` is passed. Set the `ASSET_MODE` constant at the top of the file to `repo-copy` (default) to also save a local copy under `public/images/blog/<primary-locale-slug>.<ext>` for git asset history, or `sanity-only` to skip the local copy and upload only to Sanity (§1.J3). The patch loop checks each locale's post document exists before patching, so topics that only have posts in a subset of locales (§1.B4 = independent) are handled safely.
 
 ```typescript
 /**
@@ -921,6 +921,10 @@ import { createClient } from "next-sanity";
 
 const GEMINI_MODEL = "gemini-3-pro-image-preview";
 const ASPECT_RATIO = "16:9";
+
+// §1.J3 — `repo-copy` also writes the image under public/images/blog/<primary-slug>.<ext>
+// for git asset history; `sanity-only` skips the local copy and relies on Sanity CDN.
+const ASSET_MODE: "repo-copy" | "sanity-only" = "repo-copy";
 
 // Locales list — match the order in §1.B1. The first entry is the primary locale.
 const LOCALES = ["en"] as const; // e.g. ["en", "fr", "de"]
@@ -1006,6 +1010,14 @@ async function postHasHeroImage(id: string): Promise<boolean> {
   return Boolean(doc?.heroImage?.asset);
 }
 
+async function postExists(id: string): Promise<boolean> {
+  const doc = await client.fetch<{ _id: string } | null>(
+    `*[_id == $id][0]{ _id }`,
+    { id },
+  );
+  return Boolean(doc);
+}
+
 async function processTopic(topic: Topic, force: boolean): Promise<"skipped" | "done"> {
   const ids = LOCALES.map((loc) => ({ loc, id: `post.${loc}.${topic.slugs[loc]}` }));
 
@@ -1021,9 +1033,14 @@ async function processTopic(topic: Topic, force: boolean): Promise<"skipped" | "
   const { buffer, mime } = await generateImage(topic.prompt);
   const ext = mime === "image/png" ? "png" : "jpg";
   const primarySlug = topic.slugs[LOCALES[0]];
-  const localPath = resolve(BLOG_IMAGES_DIR, `${primarySlug}.${ext}`);
-  await writeFile(localPath, buffer);
-  console.log(`  • wrote ${localPath} (${(buffer.length / 1024).toFixed(0)} KB, ${mime})`);
+
+  if (ASSET_MODE === "repo-copy") {
+    const localPath = resolve(BLOG_IMAGES_DIR, `${primarySlug}.${ext}`);
+    await writeFile(localPath, buffer);
+    console.log(`  • wrote ${localPath} (${(buffer.length / 1024).toFixed(0)} KB, ${mime})`);
+  } else {
+    console.log(`  • skipping local copy (ASSET_MODE = sanity-only)`);
+  }
 
   console.log(`  • uploading to Sanity…`);
   const asset = await client.assets.upload("image", buffer, {
@@ -1032,7 +1049,16 @@ async function processTopic(topic: Topic, force: boolean): Promise<"skipped" | "
   });
   console.log(`  • asset ${asset._id}`);
 
-  for (const { loc, id } of ids) {
+  // §B4 default = independent: posts can exist in any subset of locales.
+  // Check each locale doc and skip the ones that don't have a post for this topic.
+  const existence = await Promise.all(ids.map(({ id }) => postExists(id)));
+  const present = ids.filter((_, i) => existence[i]);
+  const missing = ids.filter((_, i) => !existence[i]);
+  for (const { loc, id } of missing) {
+    console.log(`  ↷ no post for ${loc} (${id}) — skipping that locale`);
+  }
+
+  for (const { loc, id } of present) {
     await client
       .patch(id)
       .set({
